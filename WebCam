@@ -1,9 +1,13 @@
+# Required Libraries
+
 import cv2
 import numpy as np
 import pyautogui as gui
 
+# Initializing Web Cam
 cap = cv2.VideoCapture(0)
 
+# Binding Color Range
 lower_blue = np.array([100,150,0])
 upper_blue = np.array([140,255,255])
 
@@ -11,7 +15,10 @@ pre_y = 0
 pre_x = 0
 
 while True:
+    # Input From Web Cam
     ret, frame = cap.read()
+    
+    #Image Processing And Masking
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
     
@@ -32,15 +39,13 @@ while True:
             if y > pre_y:
                 print("Moving Down...!!")
                 gui.press('up')
-                pre_y = y
-                
-        
-            
-        
+                pre_y = y    
     
+    # Displaying Image
     cv2.imshow('frame', frame)
     #cv2.imshow('mask', mask)
     
+    # Closing Web Cam
     if cv2.waitKey(10) == ord('q'):
         break
 
